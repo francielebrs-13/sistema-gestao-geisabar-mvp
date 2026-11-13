@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geisa Bar - Resumo do Pedido</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        body { background-color: #121212; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 10px; }
+        
+        .mobile-container {
+            width: 100%;
+            max-width: 414px;
+            background-color: #ffffff;
+            border-radius: 32px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+            padding: 20px 16px;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: #d4af37;
+            background: #1e1e1e;
+            padding: 10px 14px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+
+        .title-area {
+            font-size: 18px;
+            font-weight: 700;
+            color: #111;
+            margin-bottom: 16px;
+        }
+
+        .card {
+            background: #f8f9fa;
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 16px;
+            border: 1px solid #eee;
+        }
+
+        .item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .item-info h4 { font-size: 14px; color: #111; margin-bottom: 2px; }
+        .item-info span { font-size: 12px; color: #666; }
+        .item-price { font-size: 14px; font-weight: 700; color: #111; }
+
+        .obs-box {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 20px;
+        }
+
+        .obs-box label { font-size: 12px; font-weight: 600; color: #555; }
+        .obs-textarea {
+            width: 100%;
+            height: 80px;
+            border-radius: 12px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            font-size: 13px;
+            resize: none;
+        }
+
+        .finance-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: #444;
+            margin-bottom: 8px;
+        }
+
+        .finance-total { font-weight: 700; color: #111; font-size: 16px; }
+
+        .btn-confirm {
+            width: 100%;
+            background-color: #10b981;
+            color: white;
+            border: none;
+            border-radius: 14px;
+            padding: 14px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+            margin-top: 10px;
+        }
+
+        .btn-confirm:hover { background-color: #059669; }
+
+        .nav-link {
+            text-align: center;
+            margin-top: 12px;
+            font-size: 12px;
+        }
+
+        .nav-link a { color: #d4af37; text-decoration: none; font-weight: 600; }
+    </style>
+</head>
+<body>
+
+    <div class="mobile-container">
+        <div class="header-top">
+            <span>GEISA BAR • CLIENTE</span>
+            <span>Mesa 04</span>
+        </div>
+
+        <div class="title-area">Resumo do Pedido</div>
+
+        <div class="card">
+            <div class="item-row">
+                <div class="item-info">
+                    <h4>Cerveja 600ml</h4>
+                    <span>Qtd: 1 un</span>
+                </div>
+                <div class="item-price">R$ 12,00</div>
+            </div>
+        </div>
+
+        <div class="obs-box">
+            <label>Observações do pedido (ex: copo de gelo)</label>
+            <textarea class="obs-textarea" id="obs-input" placeholder="Ex: Trazer copo com bastante gelo.">Trazer copo com bastante gelo.</textarea>
+        </div>
+
+        <div class="card">
+            <div class="finance-row">
+                <span>Mesa de atendimento</span>
+                <span>Geisa Bar • Mesa 04</span>
+            </div>
+            <hr style="border: none; border-top: 1px solid #eee; margin: 8px 0;">
+            <div class="finance-row">
+                <span>Resumo financeiro</span>
+                <span class="finance-total">Total: R$ 12,00</span>
+            </div>
+        </div>
+
+        <button class="btn-confirm" id="btn-enviar">Confirmar e enviar pedido</button>
+
+        <div class="nav-link">
+            <a href="index.html">← Voltar ao Portal de Início</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('btn-enviar').addEventListener('click', function() {
+            const observacao = document.getElementById('obs-input').value;
+            const pedido = {
+                id: Math.floor(Math.random() * 900) + 100,
+                mesa: "Mesa 04",
+                horario: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                status: "Pendente • Aguardando preparo",
+                total: "R$ 12,00",
+                observacao: observacao || "Nenhuma observação"
+            };
+
+            let comandas = JSON.parse(localStorage.getItem('geisa_comandas')) || [];
+            comandas.push(pedido);
+            localStorage.setItem('geisa_comandas', JSON.stringify(comandas));
+
+            alert("Pedido enviado com sucesso para o balcão!");
+            window.location.href = 'index.html';
+        });
+    </script>
+</body>
+</html>

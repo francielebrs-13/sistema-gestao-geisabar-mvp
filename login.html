@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geisa Bar - Login do Atendente</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        body { background-color: #121212; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 10px; }
+        
+        .mobile-container {
+            width: 100%;
+            max-width: 414px;
+            background-color: #ffffff;
+            border-radius: 32px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+            padding: 30px 20px;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: #d4af37;
+            background: #1e1e1e;
+            padding: 10px 14px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            font-weight: 600;
+        }
+
+        .title-area {
+            font-size: 20px;
+            font-weight: 700;
+            color: #111;
+            margin-bottom: 6px;
+        }
+
+        .subtitle {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 24px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #444;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-input:focus {
+            border-color: #ff6b00;
+        }
+
+        .error-msg {
+            color: #dc2626;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 14px;
+            display: none;
+            background: #fef2f2;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #fecaca;
+        }
+
+        .btn-login {
+            width: 100%;
+            background-color: #ff6b00;
+            color: white;
+            border: none;
+            border-radius: 14px;
+            padding: 14px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+            margin-top: 8px;
+        }
+
+        .btn-login:hover { background-color: #e05e00; }
+
+        .nav-link {
+            text-align: center;
+            margin-top: 18px;
+            font-size: 12px;
+        }
+
+        .nav-link a { color: #666; text-decoration: none; font-weight: 600; }
+        .nav-link a:hover { color: #111; }
+    </style>
+</head>
+<body>
+
+    <div class="mobile-container">
+        <div class="header-top">
+            <span>GEISA BAR • SEGURANÇA</span>
+            <span>🔒 Área Restrita</span>
+        </div>
+
+        <div class="title-area">Acesso ao Balcão</div>
+        <div class="subtitle">Insira as suas credenciais de operador para gerir as comandas.</div>
+
+        <form id="form-login">
+            <div class="form-group">
+                <label for="usuario">Utilizador / Operador</label>
+                <input type="text" id="usuario" class="form-input" placeholder="Digite o seu utilizador" required autocomplete="off">
+            </div>
+
+            <div class="form-group">
+                <label for="senha">Senha de Acesso</label>
+                <input type="password" id="senha" class="form-input" placeholder="••••••••" required>
+            </div>
+
+            <div class="error-msg" id="mensagem-erro">
+                ❌ Utilizador ou senha inválidos. Tente novamente.
+            </div>
+
+            <button type="submit" class="btn-login">Entrar no Painel →</button>
+        </form>
+
+        <div class="nav-link">
+            <a href="index.html">← Voltar à seleção de perfil</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('form-login').addEventListener('submit', function(e) {
+            e.preventDefault(); // Evita recarregar a página
+            
+            const user = document.getElementById('usuario').value.trim();
+            const pass = document.getElementById('senha').value;
+            const erroBox = document.getElementById('mensagem-erro');
+
+            // Credenciais internas do MVP (ocultas da interface)
+            if (user === 'admin' && pass === '1234') {
+                erroBox.style.display = 'none';
+                sessionStorage.setItem('geisa_auth', 'true');
+                window.location.href = 'balcao.html';
+            } else {
+                erroBox.style.display = 'block';
+                document.getElementById('senha').value = ''; // Limpa o campo de senha
+            }
+        });
+    </script>
+</body>
+</html>

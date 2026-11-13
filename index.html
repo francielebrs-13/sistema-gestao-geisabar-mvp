@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Geisa Bar - Resumo do Pedido</title>
+    <title>Geisa Bar - Portal de Acesso</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
         body { background-color: #121212; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 10px; }
@@ -17,199 +17,86 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             display: flex;
             flex-direction: column;
-            padding: 20px 16px;
+            padding: 30px 20px;
         }
 
-        .header-top {
-            font-size: 13px;
-            color: #555;
-            margin-bottom: 8px;
+        .header-brand {
+            text-align: center;
+            margin-bottom: 30px;
         }
 
-        .title-area {
-            font-size: 20px;
-            font-weight: 700;
-            color: #111;
-            margin-bottom: 20px;
-        }
+        .logo-area { font-size: 24px; font-weight: 800; color: #111; margin-bottom: 6px; }
+        .subtitle { font-size: 13px; color: #666; }
 
-        .card {
-            background: #ffffff;
-            border: 1px solid #eaeaea;
-            border-radius: 16px;
-            padding: 16px;
-            margin-bottom: 16px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
-        }
-
-        .card-header-row {
-            display: flex;
-            justify-content: space-between;
-            font-size: 12px;
-            color: #777;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-
-        .item-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .item-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .item-thumb {
-            width: 48px;
-            height: 48px;
-            background: #fff8eb;
-            border: 1px solid #ffeeba;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-        }
-
-        .item-text h4 {
+        .section-title {
             font-size: 14px;
-            color: #111;
             font-weight: 600;
+            color: #444;
+            margin-bottom: 12px;
         }
 
-        .item-text span {
-            font-size: 12px;
-            color: #666;
-        }
-
-        .counter-control {
-            display: flex;
-            align-items: center;
-            background: #f8f9fa;
-            border: 1px solid #eee;
-            border-radius: 12px;
-            padding: 4px;
-            gap: 8px;
-        }
-
-        .btn-action {
-            width: 32px;
-            height: 32px;
-            border: none;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .btn-trash { background: #fff0f0; color: #d9534f; }
-        .btn-plus { background: #ff6b00; color: white; font-size: 16px; }
-        .counter-num { font-weight: 600; font-size: 14px; color: #333; padding: 0 4px; }
-
-        .obs-box label {
-            font-size: 13px;
-            font-weight: 600;
-            color: #333;
-            display: block;
-            margin-bottom: 8px;
-        }
-
-        .obs-textarea {
+        .btn-profile {
             width: 100%;
-            border: 1px solid #ddd;
-            border-radius: 12px;
-            padding: 12px;
-            font-size: 13px;
-            color: #333;
-            resize: none;
-            height: 70px;
-            background: #fafafa;
-        }
-
-        .finance-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 4px 0;
-        }
-
-        .finance-row span:first-child { font-size: 13px; color: #666; }
-        .finance-row span:last-child { font-size: 14px; font-weight: 700; color: #111; }
-        .finance-total { font-size: 16px !important; color: #111; }
-
-        .btn-confirm {
-            width: 100%;
-            background-color: #10b981;
-            color: white;
-            border: none;
+            background-color: #f8f9fa;
+            border: 2px solid #e5e7eb;
             border-radius: 16px;
             padding: 16px;
             font-size: 15px;
-            font-weight: 600;
+            font-weight: 700;
+            color: #111;
             cursor: pointer;
-            text-align: center;
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-            margin-top: 4px;
+            margin-bottom: 16px;
+            transition: all 0.2s;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-decoration: none;
         }
 
-        .btn-confirm:hover { background-color: #059669; }
+        .btn-profile:hover { border-color: #d4af37; background-color: #fffdf5; }
+        .btn-profile.atendente { border-color: #ff6b00; background-color: #ffffff; }
+        .btn-profile.atendente:hover { background-color: #fff8f0; }
+
+        .footer-note {
+            text-align: center;
+            font-size: 11px;
+            color: #888;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
 
     <div class="mobile-container">
-        <div class="header-top">← Voltar ao cardápio</div>
-        <div class="title-area">Resumo do pedido • Mesa 04</div>
-
-        <!-- Card de Item -->
-        <div class="card">
-            <div class="card-header-row">
-                <span>ITENS DO SEU PEDIDO</span>
-                <span>1 item</span>
-            </div>
-            <div class="item-row">
-                <div class="item-info">
-                    <div class="item-thumb">🍺</div>
-                    <div class="item-text">
-                        <h4>1x Cerveja 600ml</h4>
-                        <span>Unitário: R$ 12,00</span>
-                    </div>
-                </div>
-                <div class="counter-control">
-                    <button class="btn-action btn-trash">🗑️</button>
-                    <span class="counter-num">1</span>
-                    <button class="btn-action btn-plus">+</button>
-                </div>
-            </div>
+        <div class="header-brand">
+            <div class="logo-area">🍺 Geisa Bar</div>
+            <div class="subtitle">Sistema de Gestão e Pedidos • MVP</div>
         </div>
 
-        <!-- Card de Observação -->
-        <div class="card obs-box">
-            <label>Observações do pedido (ex: copo de gelo)</label>
-            <textarea class="obs-textarea">Trazer copo com bastante gelo.</textarea>
-        </div>
+        <div class="section-title">Selecione o seu perfil de acesso:</div>
 
-        <!-- Card Financeiro -->
-        <div class="card">
-            <div class="finance-row" style="margin-bottom: 8px;">
-                <span>Mesa de atendimento</span>
-                <span>Geisa Bar • Mesa 04</span>
+        <!-- Perfil Cliente -->
+        <a href="carrinho.html" class="btn-profile">
+            <div>
+                <div style="font-size: 16px; color: #111;">📱 Cliente (Mesa 04)</div>
+                <div style="font-size: 12px; color: #666; font-weight: normal; margin-top: 2px;">Cardápio e envio de pedidos</div>
             </div>
-            <hr style="border: none; border-top: 1px solid #eee; margin: 8px 0;">
-            <div class="finance-row">
-                <span>Resumo financeiro</span>
-                <span class="finance-total">Total: R$ 12,00</span>
-            </div>
-        </div>
+            <span style="color: #666;">→</span>
+        </a>
 
-        <!-- Botão Final -->
-        <button class="btn-confirm">Confirmar e enviar o pedido ✓</button>
+        <!-- Perfil Atendente (Leva para a tela de login dedicada) -->
+        <a href="login.html" class="btn-profile atendente">
+            <div>
+                <div style="font-size: 16px; color: #ff6b00;">🔒 Atendente / Balcão</div>
+                <div style="font-size: 12px; color: #666; font-weight: normal; margin-top: 2px;">Acesso restrito à equipe</div>
+            </div>
+            <span style="color: #ff6b00;">→</span>
+        </a>
+
+        <div class="footer-note">
+            Segurança acadêmica • Controle de acesso RBAC
+        </div>
     </div>
 
 </body>

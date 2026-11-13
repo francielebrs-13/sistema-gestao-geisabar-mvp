@@ -124,11 +124,6 @@
             font-weight: 600;
         }
 
-        .item-detail span:last-child {
-            color: #555;
-            font-weight: normal;
-        }
-
         .obs-box {
             background: #fffdf5;
             border: 1px solid #fce881;
@@ -179,55 +174,94 @@
 <body>
 
     <div class="mobile-container">
-        <!-- Topo da Operação -->
         <div class="header-top">
             <span>GEISA BAR • OPERAÇÃO</span>
             <div class="status-badge">
                 <div class="status-dot"></div>
-                Conectado
+                Seguro (Autenticado)
             </div>
         </div>
 
         <div class="info-bar">
             <span>Painel do balcão • Atendente</span>
-            <span>Atualização em tempo real</span>
+            <a href="#" onclick="sessionStorage.removeItem('geisa_auth'); window.location.href='index.html';" style="color: #d4af37; text-decoration: none; font-weight: 600;">Sair ↩</a>
         </div>
 
-        <div class="title-area">Comanda recebida (1)</div>
+        <div class="title-area" id="titulo-comandas">Carregando...</div>
 
-        <!-- Card Principal da Comanda -->
-        <div class="card">
-            <div class="card-header-meta">Novo pedido • Salão principal</div>
-            <div class="card-title">Mesa 04 – Comanda #102 &nbsp;|&nbsp; <span style="font-size: 13px; font-weight: normal; color: #555;">Horário: 20:35</span></div>
-
-            <div class="status-pill">
-                <span>⏳</span> Pendente • Aguardando preparo
-            </div>
-
-            <div class="items-section">
-                <div class="items-header">
-                    <span>ITENS:</span>
-                    <span>Total: R$ 12,00</span>
-                </div>
-                <div class="item-detail">
-                    <span>🟠 1x Cerveja 600ml</span>
-                    <span>R$ 12,00</span>
-                </div>
-            </div>
-
-            <div class="obs-box">
-                <strong>OBSERVAÇÃO DO CLIENTE</strong>
-                Obs: Trazer copo com bastante gelo.
-            </div>
-
-            <button class="btn-advance">Avançar para preparo →</button>
-
-            <div class="footer-actions">
-                <a href="#">↺ Reiniciar status (Pendente)</a>
-                <a href="#">+ Novo pedido na mesa</a>
-            </div>
-        </div>
+        <div id="painel-conteudo"></div>
     </div>
 
+    <script>
+        // SEGURANÇA: Verifica se o usuário passou pela tela de login com senha
+        if (sessionStorage.getItem('geisa_auth') !== 'true') {
+            alert("⚠️ Acesso não autorizado! Faça login pelo portal.");
+            window.location.href = 'index.html';
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const comandas = JSON.parse(localStorage.getItem('geisa_comandas')) || [];
+            const tituloArea = document.getElementById('titulo-comandas');
+            const painelConteudo = document.getElementById('painel-conteudo');
+
+            if (comandas.length > 0) {
+                const comanda = comandas[comandas.length - 1];
+                tituloArea.textContent = `Comandas recebidas (${comandas.length})`;
+
+                painelConteudo.innerHTML = `
+                    <div class="card">
+                        <div class="card-header-meta">Novo pedido • Salão principal</div>
+                        <div class="card-title">${comanda.mesa} – Comanda #${comanda.id} &nbsp;|&nbsp; <span style="font-size: 13px; font-weight: normal; color: #555;">Horário: ${comanda.horario}</span></div>
+
+                        <div class="status-pill">
+                            <span>⏳</span> ${comanda.status}
+                        </div>
+
+                        <div class="items-section">
+                            <div class="items-header">
+                               <span>ITENS:</span>
+                               <span>Total: ${comanda.total}</span>
+                            </div>
+                            <div class="item-detail">
+                               <span>🟠 1x Cerveja 600ml</span>
+                               <span>${comanda.total}</span>
+                            </div>
+                        </div>
+
+                        <div class="obs-box">
+                            <strong>OBSERVAÇÃO DO CLIENTE</strong>
+                            ${comanda.observacao}
+                        </div>
+
+                        <button class="btn-advance" id="btn-concluir">Avançar para preparo →</button>
+
+                        <div class="footer-actions">
+                            <a href="#" id="btn-limpar">↺ Limpar pedidos</a>
+                            <a href="index.html">Portal principal</a>
+                        </div>
+                    </div>
+                `;
+
+                document.getElementById('btn-concluir').addEventListener('click', function() {
+                    alert("Status atualizado para: Em preparo!");
+                });
+
+                document.getElementById('btn-limpar').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    localStorage.removeItem('geisa_comandas');
+                    location.reload();
+                });
+
+            } else {
+                tituloArea.textContent = `Nenhuma comanda pendente`;
+                painelConteudo.innerHTML = `
+                    <div class="card" style="text-align: center; padding: 30px;">
+                        <p style="color: #666; font-size: 14px; margin-bottom: 16px;">O balcão está aguardando novos pedidos.</p>
+                        <a href="carrinho.html" style="color: #d4af37; font-weight: 600; text-decoration: none;">Fazer um pedido como cliente →</a>
+                    </div>
+                `;
+            }
+        });
+    </script>
 </body>
 </html>
