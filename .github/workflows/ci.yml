@@ -1,23 +1,34 @@
-name: CI Pipeline MVP
+name: CI Pipeline & Monitoramento MVP
 
 on:
   push:
     branches: [ "main", "feature/*" ]
   pull_request:
     branches: [ "main" ]
+  schedule:
+    - cron: '0 */6 * * *'
 
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Baixar código do repositório
-      uses: actions/checkout@v4
+      - name: Baixar código do repositório
+        uses: actions/checkout@v4
 
-    - name: Configurar ambiente Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20'
+      - name: Configurar ambiente Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
 
-    - name: Executar testes automatizados
-      run: node --test
+      - name: Executar testes automatizados
+        run: node --test
+
+      - name: Verificar disponibilidade da aplicação em produção
+        run: |
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://francielebrs-13.github.io/sistema-gestao-geisabar-mvp/index.html)
+          if [ "$STATUS" -ne 200 ]; then
+            echo "ERRO CRÍTICO: Aplicação indisponível (HTTP $STATUS)"
+            exit 1
+          fi
+          echo "SUCESSO: Aplicação online (HTTP $STATUS)"
