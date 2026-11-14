@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geisa Bar • Cardápio Digital</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #121212; color: #f1f1f1; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+        .card { background: #1e1e1e; border: 1px solid #333; border-radius: 16px; width: 100%; max-width: 480px; padding: 24px; box-shadow: 0 8px 24px rgba(0,0,0,0.5); }
+        .header { background: #2a2a2a; padding: 12px 16px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-left: 4px solid #f59e0b; }
+        .header h2 { font-size: 16px; color: #f59e0b; font-weight: 600; }
+        .header span { font-size: 13px; color: #aaa; }
+        h1 { font-size: 20px; margin-bottom: 16px; color: #fff; }
+        .product-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; max-height: 350px; overflow-y: auto; }
+        .product-item { background: #252525; padding: 12px 16px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #333; }
+        .product-info h3 { font-size: 15px; color: #fff; margin-bottom: 4px; }
+        .product-info p { font-size: 14px; color: #f59e0b; font-weight: bold; }
+        .btn-add { background: #f59e0b; color: #121212; border: none; padding: 8px 14px; border-radius: 6px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        .btn-add:hover { background: #d97706; }
+        .btn-cart { background: #10b981; color: #fff; border: none; width: 100%; padding: 12px; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; text-align: center; text-decoration: none; display: block; }
+        .btn-cart:hover { background: #059669; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="header">
+            <h2>GEISA BAR • CARDÁPIO</h2>
+            <span>Mesa 04</span>
+        </div>
+        
+        <h1>Escolha seus produtos:</h1>
+        
+        <div class="product-list">
+            <div class="product-item">
+                <div class="product-info">
+                    <h3>Cerveja 600ml</h3>
+                    <p>R$ 12,00</p>
+                </div>
+                <button class="btn-add" onclick="adicionarItem('Cerveja 600ml', 12.00)">Adicionar</button>
+            </div>
+            
+            <div class="product-item">
+                <div class="product-info">
+                    <h3>Porção de Fritas</h3>
+                    <p>R$ 35,00</p>
+                </div>
+                <button class="btn-add" onclick="adicionarItem('Porção de Fritas', 35.00)">Adicionar</button>
+            </div>
+
+            <div class="product-item">
+                <div class="product-info">
+                    <h3>Espetinho de Carne</h3>
+                    <p>R$ 10,00</p>
+                </div>
+                <button class="btn-add" onclick="adicionarItem('Espetinho de Carne', 10.00)">Adicionar</button>
+            </div>
+
+            <div class="product-item">
+                <div class="product-info">
+                    <h3>Refrigerante Lata</h3>
+                    <p>R$ 6,00</p>
+                </div>
+                <button class="btn-add" onclick="adicionarItem('Refrigerante Lata', 6.00)">Adicionar</button>
+            </div>
+        </div>
+
+        <a href="carrinho.html" class="btn-cart">Ir para o Carrinho / Finalizar Pedido →</a>
+    </div>
+
+    <script>
+        function adicionarItem(nome, preco) {
+            alert(nome + " adicionado ao pedido com sucesso!");
+        }
+    </script>
+</body>
+</html>
